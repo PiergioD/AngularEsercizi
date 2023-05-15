@@ -1,0 +1,19 @@
+<input type="text" class="form-control" [(ngModel)]="userName" />
+<p>{{ userName }}</p>
+<button class="btn btn-dark" (click)="resetName()" [disabled]="!userName">
+  Reset Name
+</button>
+
+<div class="container mt-5">
+  <button class="btn btn-success" (click)="showList()">Show Details</button>
+  <ul *ngIf="show" class="list-group">
+    <li
+      *ngFor="let numero of clickOnButton; let i = index"
+      class="list-group-item"
+      [ngStyle]="{ backgroundColor: i >= 5 ? 'dodgerblue' : 'lightgreen' }"
+      [ngClass]="{ 'text-white': i >= 5 }"
+    >
+      {{ numero }}
+    </li>
+  </ul>
+</div>
