@@ -1,0 +1,20 @@
+<label>Server Name</label>
+<!--
+ levento input, aggiorna ad ogni tasto schiacciato della tastiera!
+<input type="text" class="form-control" (input)="onUpdateServerName($event)" />
+<p>{{ serverName }}</p>
+-->
+
+<input type="text" class="form-control" [(ngModel)]="serverName" />
+<p>{{ serverName }}</p>
+<button
+  class="btn btn-primary"
+  [disabled]="!allowNewServer"
+  (click)="onCreateServer()"
+>
+  Add Server
+</button>
+<p [innerText]="serverCreationStatus"></p>
+
+<app-server></app-server>
+<app-server></app-server>
