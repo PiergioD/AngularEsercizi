@@ -1,4 +1,11 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 
 @Component({
   selector: 'app-cockpit',
@@ -6,8 +13,14 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
   styleUrls: ['./cockpit.component.css'],
 })
 export class CockpitComponent implements OnInit {
-  newServerName = '';
-  newServerContent = '';
+  /* newServerName = '';
+  newServerContent = ''; */
+
+  //nelle parentesi, mettto static true e il nome di riferimento, la local reference!
+  //
+  @ViewChild('serverContentInput', { static: true })
+  serverContentInput: ElementRef;
+
   @Output() serverCreated = new EventEmitter<{
     serverName: string;
     serverContent: string;
@@ -21,17 +34,22 @@ export class CockpitComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onAddServerEmit() {
+  onAddServerEmit(serverNameInput: HTMLInputElement) {
+    /// qua mi passa il valore direttamentte dell'input
+    console.log(serverNameInput.value);
+
+    // qua mi fa vedere l'element ref
+    console.log(this.serverContentInput);
     this.serverCreated.emit({
-      serverName: this.newServerName,
-      serverContent: this.newServerContent,
+      serverName: serverNameInput.value,
+      serverContent: this.serverContentInput.nativeElement.value,
     });
   }
 
-  onAddBlueprintEmit() {
+  onAddBlueprintEmit(serverNameInput: HTMLInputElement) {
     this.blueprintCreated.emit({
-      serverName: this.newServerName,
-      serverContent: this.newServerContent,
+      serverName: serverNameInput.value,
+      serverContent: this.serverContentInput.nativeElement.value,
     });
   }
 }

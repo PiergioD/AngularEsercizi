@@ -6,10 +6,29 @@
   <hr />
   <div class="row">
     <div class="col-xs-12">
+      <button class="btn btn-danger" (click)="onDestroyFirst()">
+        Delete first componenet
+      </button>
       <app-server-element
         *ngFor="let serverElement of serverElements"
         [srvElement]="serverElement"
-      ></app-server-element>
+      >
+        <!--oltre a input, output e viewchild, possiamo passare data in un altro modo. Ussando il tag ng-content
+
+        DI bases, qualsiasi cosa viene messo nel tag del componente viene perso dal dom, per recuperarlo, si mette nel template del componenete il tag ng.content
+
+      ng-content serve come un  aggancio in cui angular trova qualsiasi contenuto trovato tra il tag di apertura e chiusura del compoenente(in questo caso app-server-element)
+
+    cosi il tag componente si puo collegare al suo template-->
+        <p #contentParagraph>
+          <strong *ngIf="serverElement.type === 'server'" style="color: red">{{
+            serverElement.content
+          }}</strong>
+          <em *ngIf="serverElement.type === 'blueprint'">{{
+            serverElement.content
+          }}</em>
+        </p></app-server-element
+      >
     </div>
   </div>
 </div>
