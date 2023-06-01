@@ -1,0 +1,81 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <!--dice ad angular di utilizzare il formgroup e quindi è sincronizzato col typescript -->
+      <form [formGroup]="signUpForm" (ngSubmit)="onSubmitReattive()">
+        <!--è un nested form, quindi devo mettere il form group nome dentro il form group-->
+        <div formGroupName="userData">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <!--il form controle name indico il nome dell'input che deve essere utilizzato nel typescript-->
+            <input
+              type="text"
+              id="username"
+              class="form-control"
+              formControlName="username"
+            />
+            <!-- il get metodo accedde facilmente al form-->
+            <span
+              *ngIf="
+                !signUpForm.get('userData.username').valid &&
+                signUpForm.get('userData.username').touched
+              "
+              class="help-block"
+              ><span
+                *ngIf="
+                  signUpForm.get('userData.username').errors[nameIsForbidden]
+                "
+                >This name is invalid!</span
+              >This field is required!</span
+            >
+          </div>
+          <div class="form-group">
+            <label for="email">email</label>
+            <input
+              type="text"
+              id="email"
+              class="form-control"
+              formControlName="email"
+            />
+            <span
+              *ngIf="
+                !signUpForm.get('userData.email').valid &&
+                signUpForm.get('userData.email').touched
+              "
+              class="help-block"
+              >Please enter a Valid Email!</span
+            >
+          </div>
+        </div>
+
+        <div class="radio" *ngFor="let gender of genders">
+          <label>
+            <input type="radio" [value]="gender" formControlName="gender" />{{
+              gender
+            }}
+          </label>
+        </div>
+        <!-- voglio creare un array di hobbies e metterlo nel form-->
+        <div formArrayName="hobbies">
+          <h4>Your Hobbies</h4>
+          <button class="btn btn-dark" type="button" (click)="addHobby()">
+            Add Hobby
+          </button>
+          <div
+            class="form-group"
+            *ngFor="let hobbycontrol of getControls(); let i = index"
+          >
+            <!-- voglio creare dinamicamente questo inpupt! metto inted come form control name! quando schiaccio il pulsante addHobby mi cra un input in cui posso mettere l'hobby e melo aggiunge all'array-->
+            <input type="text" class="form.control" [formControlName]="i" />
+          </div>
+        </div>
+        <span *ngIf="!signUpForm.valid && signUpForm.touched" class="help-block"
+          >Please enter Valid data</span
+        >
+        <hr />
+        <button class="btn btn-primary" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+  <a [routerLink]="['/esercizio']">VAi all'esercizio</a>
+</div>
